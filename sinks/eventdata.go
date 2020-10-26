@@ -33,8 +33,8 @@ import (
 // whether the event is created or updated.
 type EventData struct {
 	Verb     string    `json:"verb"`
-	Event    *v1.Event `json:"event"`
-	OldEvent *v1.Event `json:"old_event,omitempty"`
+	Event    *v1.Event `json:"k8s_event"`
+	OldEvent *v1.Event `json:"old_k8s_event,omitempty"`
 }
 
 // NewEventData constructs an EventData struct from an old and new event,

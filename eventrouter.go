@@ -38,40 +38,32 @@ var (
 		Help: "Total number of warning events in the kubernetes cluster",
 	}, []string{
 		"involved_object_kind",
-		"involved_object_name",
 		"involved_object_namespace",
 		"reason",
-		"source",
 	})
 	kubernetesNormalEventCounterVec = prometheus.NewCounterVec(prometheus.CounterOpts{
 		Name: "heptio_eventrouter_normal_total",
 		Help: "Total number of normal events in the kubernetes cluster",
 	}, []string{
 		"involved_object_kind",
-		"involved_object_name",
 		"involved_object_namespace",
 		"reason",
-		"source",
 	})
 	kubernetesInfoEventCounterVec = prometheus.NewCounterVec(prometheus.CounterOpts{
 		Name: "heptio_eventrouter_info_total",
 		Help: "Total number of info events in the kubernetes cluster",
 	}, []string{
 		"involved_object_kind",
-		"involved_object_name",
 		"involved_object_namespace",
 		"reason",
-		"source",
 	})
 	kubernetesUnknownEventCounterVec = prometheus.NewCounterVec(prometheus.CounterOpts{
 		Name: "heptio_eventrouter_unknown_total",
 		Help: "Total number of events of unknown type in the kubernetes cluster",
 	}, []string{
 		"involved_object_kind",
-		"involved_object_name",
 		"involved_object_namespace",
 		"reason",
-		"source",
 	})
 )
 
@@ -162,34 +154,26 @@ func prometheusEvent(event *v1.Event) {
 	case "Normal":
 		counter, err = kubernetesNormalEventCounterVec.GetMetricWithLabelValues(
 			event.InvolvedObject.Kind,
-			event.InvolvedObject.Name,
 			event.InvolvedObject.Namespace,
 			event.Reason,
-			event.Source.Host,
 		)
 	case "Warning":
 		counter, err = kubernetesWarningEventCounterVec.GetMetricWithLabelValues(
 			event.InvolvedObject.Kind,
-			event.InvolvedObject.Name,
 			event.InvolvedObject.Namespace,
 			event.Reason,
-			event.Source.Host,
 		)
 	case "Info":
 		counter, err = kubernetesInfoEventCounterVec.GetMetricWithLabelValues(
 			event.InvolvedObject.Kind,
-			event.InvolvedObject.Name,
 			event.InvolvedObject.Namespace,
 			event.Reason,
-			event.Source.Host,
 		)
 	default:
 		counter, err = kubernetesUnknownEventCounterVec.GetMetricWithLabelValues(
 			event.InvolvedObject.Kind,
-			event.InvolvedObject.Name,
 			event.InvolvedObject.Namespace,
 			event.Reason,
-			event.Source.Host,
 		)
 	}
 
